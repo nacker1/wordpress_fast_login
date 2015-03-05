@@ -1,7 +1,8 @@
 <?php
-	include 'login.class.php';
+	#include __DIR__.'/login.class.php';
 	$lCon = get_option("wp_fast_login_options");
-	if( empty( $lCon ) ){
+
+	if( empty( $lCon ) || isset( $_POST['delCache'] ) ){
 		$url = 'http://open.51094.com/user/myscript/0.html';
 		$tempConfig = get($url);
 		$lCon = json_decode($tempConfig,true);
@@ -25,7 +26,7 @@
 			if( !empty( $ret ) && 0==$ret['result'] ){
 				delete_option('wp_fast_login_user_options');
 				update_option("wp_fast_login_user_options",$ret['data']);
-				$info = ' <span style="color:green;">配置成功，可正常使用</span> ';
+				$info = ' <span style="color:green;">配置成功，请查看<a href="/wp-login.php?action=logout">登录界面</a></span> ';
 			}else{
 				$info = ' <span style="color:red;">请求失败，请再试一次！</span> ';
 			}
@@ -56,7 +57,7 @@
 							$class = ' on ';
 						}
 						$loginConfig[] = $v['id'];
-						echo '<li class="fast_login '.$class.'" lid="'.$v['id'].'" onclick="setSelectConf(this);"><img style="width:40px;height:40px;border-radius:8px;" src="http://open.51094.com/Public/img/hezuo/hz_'.$v['id'].'.jpg"></li>';
+						echo '<li class="fast_login '.$class.'" lid="'.$v['id'].'" onclick="setSelectConf(this);"><img style="width:40px;height:40px;border-radius:8px;" src="http://open.51094.com/Public/img/hezuo/hz_'.$v['id'].'_48.jpg"></li>';
 					}
 				?>
 			</td>
@@ -65,6 +66,7 @@
 	<p class="submit" style="padding-left: 200px;">
 		<input type="hidden" name="loginConfig" id="loginConfig" value="<?php echo implode('#', $loginConfig);?>">
 		<input type="submit" class="button-primary" name="Submit" value="保存更改">
+		<input type="submit" name="delCache" value="清缓存">
 		<p><?php echo $info;?></p>
 	</p>
 	</form>
