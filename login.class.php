@@ -6,7 +6,7 @@
 			var login = document.getElementById('loginform');
 			var div = document.createElement('div');
 			div.style['padding'] = '10px 0';
-			div.innerHTML = '其它登录：<span id=\"hzy_fast_login\"></span>';
+			div.innerHTML = '其它：<span id=\"hzy_fast_login\"></span>';
 			login.appendChild(div);
 			var url = 'http://open.51094.com/user/myscript/".$config['appid'].".html';
 			var script = document.createElement('script');
@@ -17,7 +17,7 @@
 	}
 
 	function login_admin_page(){
-		include 'wp-login-admin.php';
+		include __DIR__.'/wp-login-admin.php';
 	}
 
 	function login_admin_menu(){
