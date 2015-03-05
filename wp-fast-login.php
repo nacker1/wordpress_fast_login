@@ -14,7 +14,7 @@
 	add_action('init','getCallback',1);
 	add_action( 'login_form',  'login_page' );
 	add_action('admin_menu', 'login_admin_menu');
-	add_filter('plugin_action_links', 'fast_login_settings_link', 10, 2 );
+	
 	function fast_login_settings_link($links, $file) {
 		if ($file == plugin_basename(__FILE__)){
 			$settings_link = '<a href="options-general.php?page=' . dirname(plugin_basename(__FILE__)) . '/login.class.php">' . __("Settings") . '</a>';
@@ -22,6 +22,8 @@
 		}
 		return $links;
 	}
+
+	add_filter('plugin_action_links', 'fast_login_settings_link', 10, 2 );
 
 	function qqconnect_register_extra_fields($user_id, $password = "", $meta = array()) {
 		$userdata = array();
