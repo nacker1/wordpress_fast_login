@@ -47,8 +47,12 @@
 	}
 
 	function getCallback(){
-		if ( isset( $_GET['param'] ) ) {
+		if ( isset( $_GET['param'] ) || isset( $_GET['code'] ) ) {
 			$param = stripslashes(urldecode($_GET['param']));
+			$code = $_GET['code'];
+			if( empty( $param ) ){
+				$param = post( 'http://open.51094.com/user/auth.html', array( 'type'=>'get_user_info', 'code'=>$code ) );
+			}
 			$param = json_decode($param,true);
 			if( isset( $param['name'] ) && isset( $param['uniq'] ) ){ 			//插件登录回调
 				$user = isSign( $param );
